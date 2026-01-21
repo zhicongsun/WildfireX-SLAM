@@ -53,7 +53,7 @@ This repository contains the **WildfireX-SLAM Dataset** and data collection scri
 ## Contents
 - `wildfirex_slam_data_collection.py`: AirSim-based data collection script.
 - `wildfirex_slam_data_collection_png.ipynb`: Notebook version of the data collection pipeline.
-- `external-libraries/`: Vendored Python dependencies for the AirSim client.
+- `external-libraries/`: Python dependencies for the AirSim client.
 
 
 ## Acknowledgement
