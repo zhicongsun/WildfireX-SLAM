@@ -71,10 +71,12 @@ WildfireX-SLAM is released under the terms in `LICENSE`.
 If you find this dataset/code useful, please cite:
 
 ```bibtex
-@inproceedings{wildfirexslam2026,
-  title        = {WildfireX-SLAM: A Large-scale Low-altitude RGB-D Dataset for Wildfire SLAM and Beyond},
-  author       = {Zhicong Sun, Jacqueline Lo, Jinxing Hu},
-  journal      ={arXiv preprint arXiv:2510.27133},
-  year         = {2026},
+@inproceedings{sun2026wildfirex,
+  title={WildfireX-SLAM: A Large-Scale Low-Altitude RGB-D Dataset for Wildfire SLAM and Beyond},
+  author={Sun, Zhicong and Lo, Jacqueline and Hu, Jinxing},
+  booktitle={International Conference on Multimedia Modeling},
+  pages={533--546},
+  year={2026},
+  organization={Springer}
 }
 ```
