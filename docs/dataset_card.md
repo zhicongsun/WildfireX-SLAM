@@ -58,12 +58,12 @@ what you need. RGB + depth for all sequences is ≈ 17.5 GB of the ≈ 62 GB tot
 
 ```bash
 pip install -U huggingface_hub
-# RGB-D, poses and metadata of all 19 sequences (~17.5 GB)
-huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM   --include "*.md" "*.csv" "*.yaml" "splits/*" "survey/*" "sequences/*/*.txt" "sequences/*/*.json"             "sequences/*/*.yaml" "sequences/*/*.csv" "sequences/*/rgb.zip" "sequences/*/depth.zip"
+# RGB-D, poses and metadata of all 19 sequences (~17.5 GB): skip the other modalities
+hf download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM   --exclude "*/normal.zip" --exclude "*/albedo.zip" --exclude "*/roughness.zip" --exclude "*/specular.zip" --exclude "*/ir.zip"
 # one complete sequence
-huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM --include "sequences/ed01-0002/*"
+hf download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM --include "sequences/ed01-0002/*"
 # everything (~62 GB)
-huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM
+hf download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM
 ```
 
 Unzip in place (each `<modality>.zip` extracts to `<modality>/000000.png ...` inside its sequence folder):
