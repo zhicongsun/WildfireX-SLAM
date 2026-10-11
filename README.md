@@ -59,7 +59,8 @@
 
 <p align="center"><img src="./images/v2_sequences.jpg" alt="one frame of each sequence" width="100%"></p>
 
-Download from [Hugging Face](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM) and load a sequence with the toolkit:
+Download from [Hugging Face](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM) — one zip per modality per sequence,
+so you can fetch e.g. only RGB-D (≈ 17.5 GB of ≈ 62 GB); see the dataset card — unzip in place and load a sequence:
 
 ```python
 from wildfirex.io.sequence import Sequence          # pip install wildfirex

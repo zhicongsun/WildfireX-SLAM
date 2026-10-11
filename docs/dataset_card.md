@@ -50,6 +50,28 @@ Fire: three fire kits (ground flames + smoke) form a ≈ 24 m fire front at ever
 fire and smoke column (as in v1.0) are kept as well. At dusk a low sun lights the canopy from the opposite side to morning and the fire
 glows faintly; at night a weak moon and the fire light the scene, so it is dark away from the fire.
 
+## Download
+
+Each sequence folder holds its poses and metadata as small text / json files plus one zip per modality
+(`rgb.zip`, `depth.zip`, `normal.zip`, `albedo.zip`, `roughness.zip`, `specular.zip`, `ir.zip`), so you can fetch only
+what you need. RGB + depth for all sequences is ≈ 17.5 GB of the ≈ 62 GB total.
+
+```bash
+pip install -U huggingface_hub
+# RGB-D, poses and metadata of all 19 sequences (~17.5 GB)
+huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM   --include "*.md" "*.csv" "*.yaml" "splits/*" "survey/*" "sequences/*/*.txt" "sequences/*/*.json"             "sequences/*/*.yaml" "sequences/*/*.csv" "sequences/*/rgb.zip" "sequences/*/depth.zip"
+# one complete sequence
+huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM --include "sequences/ed01-0002/*"
+# everything (~62 GB)
+huggingface-cli download zhicongsun/WildfireX-SLAM --repo-type dataset --local-dir WildfireX-SLAM
+```
+
+Unzip in place (each `<modality>.zip` extracts to `<modality>/000000.png ...` inside its sequence folder):
+
+```bash
+python -c "import glob,os,zipfile; [zipfile.ZipFile(z).extractall(os.path.dirname(z)) for z in glob.glob('WildfireX-SLAM/sequences/*/*.zip')]"
+```
+
 ## Format
 
 See [`docs/data_format.md`](https://github.com/zhicongsun/WildfireX-SLAM/blob/main/docs/data_format.md) in the

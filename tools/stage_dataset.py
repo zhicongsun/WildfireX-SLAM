@@ -1,9 +1,12 @@
 """Stage a collected WildfireX-SLAM release for upload (maintainer helper, not part of the toolkit).
 
-  python tools/stage_dataset.py <collected_dir> <dataset_dir> [config]
+  python tools/stage_dataset.py <collected_dir> <dataset_dir> [config] [--pack]
 
-- hard-links every sequence that passed QA from <collected_dir>/<id> to <dataset_dir>/sequences/<id>
+- default: hard-links every sequence that passed QA from <collected_dir>/<id> to <dataset_dir>/sequences/<id>
   (no extra disk space; sequences are never modified)
+- --pack (layout for the Hugging Face upload): per sequence, one uncompressed zip per modality
+  (<id>/rgb.zip contains rgb/000000.png ...) next to the small text / json files. ~330 files instead of ~116k
+  (the Hub recommends < 100k files per repository); users download only the modalities they need and unzip in place
 - writes <dataset_dir>/sequences.csv (one row per sequence, conditions + QA) and splits/<release>.json (benchmarks)
 - copies the reproducing config and the canopy surface map (survey/surface.npz) next to the data
 - copies the dataset card (docs/dataset_card.md -> README.md) and license (DATASET_LICENSE.md -> LICENSE.md)
@@ -14,11 +17,31 @@ import os
 import shutil
 import subprocess
 import sys
+import zipfile
 
 from wildfirex import config  # pip install wildfirex
 
 
-def main(src, dst, cfg_path=None):
+def pack_sequence(sd, out):
+    os.makedirs(out, exist_ok=True)
+    for name in sorted(os.listdir(sd)):
+        p = os.path.join(sd, name)
+        if os.path.isfile(p):
+            shutil.copy2(p, os.path.join(out, name))
+        elif os.path.isdir(p):
+            zp = os.path.join(out, name + ".zip")
+            if os.path.exists(zp):
+                continue
+            with zipfile.ZipFile(zp + ".part", "w", zipfile.ZIP_STORED) as z:  # PNGs are already compressed
+                for f in sorted(os.listdir(p)):
+                    z.write(os.path.join(p, f), f"{name}/{f}")
+            os.replace(zp + ".part", zp)
+
+
+def main(src, dst, *args):
+    pack = "--pack" in args
+    args = [a for a in args if a != "--pack"]
+    cfg_path = args[0] if args else None
     cfg_path = cfg_path or os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "configs", "wildfirex_slam_v2.yaml")
     cfg = config.load(cfg_path)
     os.makedirs(os.path.join(dst, "sequences"), exist_ok=True)
@@ -37,7 +60,10 @@ def main(src, dst, cfg_path=None):
         with open(os.path.join(sd, "meta.json"), encoding="utf-8") as f:
             meta = json.load(f)
         out = os.path.join(dst, "sequences", s["id"])
-        if not os.path.exists(out):
+        if pack:
+            pack_sequence(sd, out)
+            print(f"  packed {s['id']}", flush=True)
+        elif not os.path.exists(out):
             subprocess.run(["cp", "-al", sd, out], check=True)  # NTFS hard links via Git Bash / MSYS
         sc = meta["sequence_config"]
         splits.setdefault(s.get("benchmark", "other"), []).append(s["id"])

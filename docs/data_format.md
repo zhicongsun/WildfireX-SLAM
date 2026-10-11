@@ -1,5 +1,8 @@
 # Sequence format
 
+On Hugging Face each image folder is shipped as `<folder>.zip` inside the sequence folder; unzipping it in place gives
+the layout below.
+
 ```
 <id>/
   rgb/000000.png          640x480 BGRA/BGR uint8
