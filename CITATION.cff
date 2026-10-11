@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use WildfireX-SLAM (dataset, toolkit or simulator), please cite the paper below."
+title: "WildfireX-SLAM"
+version: 2.0
+type: software
+authors:
+  - family-names: Sun
+    given-names: Zhicong
+  - family-names: Lo
+    given-names: Jacqueline
+  - family-names: Hu
+    given-names: Jinxing
+repository-code: "https://github.com/zhicongsun/WildfireX-SLAM"
+url: "https://zhicongsun.github.io/wildfirexslam"
+license: MIT
+preferred-citation:
+  type: conference-paper
+  title: "WildfireX-SLAM: A Large-Scale Low-Altitude RGB-D Dataset for Wildfire SLAM and Beyond"
+  authors:
+    - family-names: Sun
+      given-names: Zhicong
+    - family-names: Lo
+      given-names: Jacqueline
+    - family-names: Hu
+      given-names: Jinxing
+  collection-title: "International Conference on Multimedia Modeling"
+  publisher:
+    name: Springer
+  start: 533
+  end: 546
+  year: 2026
+  identifiers:
+    - type: other
+      value: "arXiv:2510.27133"

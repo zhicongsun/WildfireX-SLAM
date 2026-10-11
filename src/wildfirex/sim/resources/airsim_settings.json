@@ -1,0 +1,89 @@
+{
+  "SettingsVersion": 1.2,
+  "SimMode": "ComputerVision",
+  "ClockSpeed": 1.0,
+  "ViewMode": "NoDisplay",
+  "LogMessagesVisible": false,
+  "Recording": {
+    "RecordOnMove": false,
+    "Enabled": false
+  },
+  "CameraDefaults": {
+    "CaptureSettings": [
+      {
+        "ImageType": 0,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90,
+        "MotionBlurAmount": 0
+      },
+      {
+        "ImageType": 1,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 5,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 6,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 7,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 16,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 17,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 18,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      },
+      {
+        "ImageType": 20,
+        "Width": 640,
+        "Height": 480,
+        "FOV_Degrees": 90
+      }
+    ]
+  },
+  "Vehicles": {
+    "UAV1": {
+      "VehicleType": "ComputerVision",
+      "X": 0,
+      "Y": 0,
+      "Z": 0,
+      "Yaw": 0,
+      "Cameras": {
+        "rgbd": {
+          "X": 0,
+          "Y": 0,
+          "Z": 0,
+          "Pitch": 0,
+          "Roll": 0,
+          "Yaw": 0
+        }
+      }
+    }
+  }
+}

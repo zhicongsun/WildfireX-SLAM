@@ -1,0 +1,57 @@
+{
+  "ed02": {
+    "xy_ue_cm": [
+      78143.9,
+      7504.0
+    ],
+    "ground_z_ue_cm": 3455.8,
+    "canopy_height_m": 16.6,
+    "canopy_p90_m": 30.7,
+    "slope_deg": 2.9,
+    "dist_from_ed01_m": 341.6
+  },
+  "ed03": {
+    "xy_ue_cm": [
+      99625.9,
+      -13624.0
+    ],
+    "ground_z_ue_cm": 1831.9,
+    "canopy_height_m": 15.0,
+    "canopy_p90_m": 27.5,
+    "slope_deg": 3.3,
+    "dist_from_ed01_m": 579.1
+  },
+  "ed04": {
+    "xy_ue_cm": [
+      66964.9,
+      -16517.0
+    ],
+    "ground_z_ue_cm": 3692.8,
+    "canopy_height_m": 17.7,
+    "canopy_p90_m": 26.0,
+    "slope_deg": 4.8,
+    "dist_from_ed01_m": 301.4
+  },
+  "ed05": {
+    "xy_ue_cm": [
+      98772.9,
+      6720.0
+    ],
+    "ground_z_ue_cm": 3026.9,
+    "canopy_height_m": 18.8,
+    "canopy_p90_m": 37.8,
+    "slope_deg": 5.4,
+    "dist_from_ed01_m": 546.4
+  },
+  "ed06": {
+    "xy_ue_cm": [
+      59584.9,
+      16501.0
+    ],
+    "ground_z_ue_cm": 3584.8,
+    "canopy_height_m": 16.8,
+    "canopy_p90_m": 23.5,
+    "slope_deg": 9.4,
+    "dist_from_ed01_m": 202.5
+  }
+}

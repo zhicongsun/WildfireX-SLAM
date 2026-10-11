@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wildfirex"
+version = "0.1.0"
+description = "Toolkit of WildfireX-SLAM: drive the WildfireX-Sim wildfire simulator and collect multi-modal UAV data with exact poses"
+readme = "docs/pypi.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.8"
+authors = [{name = "Zhicong Sun"}]
+keywords = ["slam", "wildfire", "dataset", "simulation", "airsim", "unreal-engine", "rgb-d", "multi-modal", "gaussian-splatting", "uav"]
+dependencies = [
+    "numpy",
+    "scipy",
+    "opencv-python",
+    "pyyaml",
+    "msgpack>=1.0",
+]
+
+[project.scripts]
+wildfirex = "wildfirex.cli:main"
+
+[project.urls]
+Homepage = "https://zhicongsun.github.io/wildfirexslam"
+Repository = "https://github.com/zhicongsun/WildfireX-SLAM"
+Dataset = "https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM"
+Paper = "https://arxiv.org/abs/2510.27133"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true   # include src/wildfirex/sim/_vendor/* (vendored AirSim client, msgpackrpc, tornado4)
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "LICENSES/*"]

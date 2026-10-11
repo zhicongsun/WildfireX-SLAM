@@ -1,0 +1,20 @@
+# Smallest end-to-end test: one 150-frame RGB-D sequence (~3 min including warm-up).
+#   wildfirex collect configs/examples/quickstart.yaml --sim <path to ElectricDreamsSample.exe>
+schema_version: 1
+name: quickstart
+output_dir: ../../output/quickstart
+
+simulator:
+  executable: null
+  version: WildfireX-Sim 1.1
+
+defaults:
+  modalities: [rgb, depth]
+  warmup_sec: 20.0
+  max_frames: 150
+
+trajectories:
+  T01: {type: spiral, center: fire, radius: 72, turns: 0.28, phi_start_deg: 34, phi_end_deg: 34, n_points: 120}
+
+sequences:
+  - {id: quick-0001, alias: fire_spiral_short, trajectory: T01}

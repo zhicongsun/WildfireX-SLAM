@@ -1,0 +1,60 @@
+# WildfireX-SLAM v2.0 (WildfireX-Sim 1.1): 6 fire sites, canopy-following low-altitude flights.
+# Reproduce: wildfirex survey configs/wildfirex_slam_v2.yaml   (once: canopy surface map)
+#            wildfirex survey configs/wildfirex_slam_v2.yaml --refine   (once: low-altitude re-survey around the sites)
+#            wildfirex collect configs/wildfirex_slam_v2.yaml
+schema_version: 1
+name: WildfireX-SLAM v2.0
+output_dir: ../output/wildfirex_slam_v2
+
+simulator:
+  executable: null          # --sim PATH or WILDFIREX_SIM
+  version: WildfireX-Sim 1.1 (Electric Dreams, UE 5.2, AirSim-WildfireX plugin)
+  port: 41451
+
+defaults:
+  speed: 3.0                # m/s -> 0.1 m per frame at 30 Hz
+  fps: 30
+  game_speed: 0.1
+  warmup_sec: 30.0
+  modalities: [rgb, depth, normal, ir, albedo, roughness, specular]
+  # three fire kits laid out as a 24 m fire front on the ground at the site
+  fire: {mode: static, kits: [A, B, C], flame: NFire_06, spacing: 12.0, heading_deg: 30.0, glow: auto}   # fire light: faint at dusk, stronger at night, off in daylight
+  light: {}
+  weather: {fog: 0.0, leaf: 0.0, dust: 0.0}
+
+# Altitudes follow the surveyed canopy (height_ref: canopy) with a fixed clearance.
+trajectories:
+  T01: {type: spiral, center: fire, radius: 60, turns: 0.30, phi_start_deg: 45, phi_end_deg: 45, n_points: 120, height_ref: canopy, clearance: 12}
+  # T02: lawn-mower survey beside the fire: 55 m to the side (-x), camera 30 deg down looking at the fire.
+  # (nadir right over the fire, or 35 m beside it, flies inside the spreading smoke: half of the frames were > 50 % smoke)
+  T02: {type: zigzag, center: fire, offset: [-55, 0], height: 0, width: 24, length: 20, spacing: 10, yaw_deg: 0, pitch_deg: -30, height_ref: canopy, clearance: 15}
+  # T03: search flight that ends 45 m beside the fire (not inside its smoke), always looking at the fire
+  T03: {type: search, center: fire, offset: [-45, 0], look_at: fire, start_offset: [-50, 50, 0], end_height: 0, curvature: 0.4, seed: 7, height_ref: canopy, clearance: 15}
+  T04: {type: spiral, center: fire, radius: 60, turns: 0.30, phi_start_deg: 45, phi_end_deg: 45, n_points: 120, height_ref: canopy, clearance: 15}
+
+# ids: <site>-<number>; conditions live in the fields.
+sequences:
+  # A: no fire vs fire, two sites, spiral around the fire and survey beside it
+  - {id: ed01-0001, alias: A_ed01_nofire_spiral, benchmark: A, trajectory: T01, fire: {mode: "off", site: ed01}}
+  - {id: ed01-0002, alias: A_ed01_fire_spiral,   benchmark: A, trajectory: T01, fire: {site: ed01, original_smoke: true}}
+  - {id: ed01-0003, alias: A_ed01_nofire_zigzag, benchmark: A, trajectory: T02, fire: {mode: "off", site: ed01}}
+  - {id: ed01-0004, alias: A_ed01_fire_zigzag,   benchmark: A, trajectory: T02, fire: {site: ed01, original_smoke: true}}
+  - {id: ed02-0001, alias: A_ed02_nofire_spiral, benchmark: A, trajectory: T01, fire: {mode: "off", site: ed02}}
+  - {id: ed02-0002, alias: A_ed02_fire_spiral,   benchmark: A, trajectory: T01, fire: {site: ed02}}
+  - {id: ed02-0003, alias: A_ed02_nofire_zigzag, benchmark: A, trajectory: T02, fire: {mode: "off", site: ed02}}
+  - {id: ed02-0004, alias: A_ed02_fire_zigzag,   benchmark: A, trajectory: T02, fire: {site: ed02}}
+  # CS1: falling leaves (fire on)
+  - {id: ed03-0001, alias: CS1_ed03_search,      benchmark: CS1, trajectory: T03, fire: {site: ed03}}
+  - {id: ed03-0002, alias: CS1_ed03_leaf_search, benchmark: CS1, trajectory: T03, fire: {site: ed03}, weather: {leaf: 1.0}}
+  - {id: ed03-0003, alias: CS1_ed03_spiral,      benchmark: CS1, trajectory: T04, fire: {site: ed03}}
+  - {id: ed03-0004, alias: CS1_ed03_leaf_spiral, benchmark: CS1, trajectory: T04, fire: {site: ed03}, weather: {leaf: 1.0}}
+  # CS2: illumination (fire on); dusk = low sun from the opposite side to morning + faint fire light; night = moon + fire light
+  - {id: ed04-0001, alias: CS2_ed04_morning, benchmark: CS2, trajectory: T04, fire: {site: ed04}, light: {preset: morning}}
+  - {id: ed04-0002, alias: CS2_ed04_noon,    benchmark: CS2, trajectory: T04, fire: {site: ed04}, light: {preset: noon}}
+  - {id: ed04-0003, alias: CS2_ed04_dusk,    benchmark: CS2, trajectory: T04, fire: {site: ed04}, light: {preset: dusk}}
+  - {id: ed04-0004, alias: CS2_ed04_night,   benchmark: CS2, trajectory: T04, fire: {site: ed04}, light: {preset: night}}
+  # CS3: fog (fire on)
+  - {id: ed05-0001, alias: CS3_ed05_nofog, benchmark: CS3, trajectory: T02, fire: {site: ed05}}
+  - {id: ed05-0002, alias: CS3_ed05_fog,   benchmark: CS3, trajectory: T02, fire: {site: ed05}, weather: {fog: 0.7}}
+  # CS4: fire + leaves + fog + night (fog 0.35: at 0.7 the fire-lit night fog hid the ground)
+  - {id: ed06-0001, alias: CS4_ed06_fire_leaf_fog_night, benchmark: CS4, trajectory: T04, fire: {site: ed06}, light: {preset: night}, weather: {leaf: 1.0, fog: 0.35}}
