@@ -5,7 +5,7 @@ Toolkit of [WildfireX-SLAM](https://github.com/zhicongsun/WildfireX-SLAM): drive
 roughness, specular and object-ID images with exact camera poses at 30 Hz — under runtime-controlled fire, smoke, fog,
 falling leaves and time of day. Every sequence of the WildfireX-SLAM v2.0 dataset can be regenerated with it.
 
-![WildfireX-SLAM v2.0](https://raw.githubusercontent.com/zhicongsun/WildfireX-SLAM/main/images/v2_overview.jpg)
+![WildfireX-SLAM v2.0](https://raw.githubusercontent.com/zhicongsun/WildfireX-SLAM/afdce5c177cf448a0ecd5f905d92ff7cef5f4643/images/v2_overview.jpg)
 
 ## Install
 
