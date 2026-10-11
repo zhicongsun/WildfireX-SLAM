@@ -68,7 +68,9 @@ seq = Sequence("WildfireX-SLAM/sequences/ed01-0002")
 rgb, depth, c2w, K = seq.rgb(0), seq.depth(0), seq.poses[0], seq.K   # depth in metres, OpenCV camera-to-world
 ```
 
-Format details: [docs/data_format.md](docs/data_format.md). Differences from v1.0 and known limitations: dataset card on Hugging Face.
+**Conventions:** depth PNGs are in **centimetres** (`depth_scale: 100`, not TUM's 5000 — set your loader's depth scale to 100);
+poses are camera-to-world with an OpenCV camera (x right, y down, z forward) in an AirSim NED world (x north, y east, **z down**).
+Details and a z-up conversion: [docs/data_format.md](docs/data_format.md#conventions). Differences from v1.0: dataset card on Hugging Face.
 
 ## Collect your own data
 

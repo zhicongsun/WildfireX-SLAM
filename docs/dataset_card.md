@@ -74,7 +74,25 @@ python -c "import glob,os,zipfile; [zipfile.ZipFile(z).extractall(os.path.dirnam
 
 ## Format
 
-See [`docs/data_format.md`](https://github.com/zhicongsun/WildfireX-SLAM/blob/main/docs/data_format.md) in the
+### Conventions — read before using TUM / Replica loaders
+
+| | |
+|---|---|
+| **Depth** | 16-bit PNG, planar depth in **centimetres**: metres = value / 100 (`depth_scale: 100` in `intrinsics.yaml`); 0 = invalid. **This is not TUM's 5000** — set the depth scale of your loader to **100**, otherwise all depths come out 50× too small. Centimetres are needed because depth reaches several hundred metres outdoors (TUM's 5000 would cap it at 13 m). |
+| **Camera frame** | OpenCV: x right, y down, z forward — the same as TUM and Replica. |
+| **Poses** | camera-to-world. `groundtruth.txt`: TUM format `timestamp tx ty tz qx qy qz qw`; `traj.txt`: Replica format, one row-major 4×4 matrix per line. |
+| **World frame** | AirSim NED: x north, y east, **z down** (metres, right-handed). All 19 sequences share one world frame. Trajectory metrics (ATE/RPE with alignment) are unaffected; viewers that assume z up show the scene upside down. |
+| **Intrinsics** | pinhole, no distortion: fx = fy = 320, cx = 320, cy = 240 (640 × 480). |
+
+To get a z-up world (x north, y west, z up), left-multiply every pose; the camera frame stays OpenCV:
+
+```python
+import numpy as np
+F = np.diag([1.0, -1.0, -1.0, 1.0])   # NED -> NWU (z up), still right-handed
+c2w_zup = F @ c2w
+```
+
+Full file list: [`docs/data_format.md`](https://github.com/zhicongsun/WildfireX-SLAM/blob/main/docs/data_format.md) in the
 WildfireX-SLAM repository. In short: `depth/*.png` are uint16 centimetres (0 = invalid); poses are OpenCV
 camera-to-world with the world in AirSim NED (metres); `intrinsics.yaml` gives fx = fy = 320, cx = 320, cy = 240.
 `meta.json` records `ned_origin_ue_cm` (the AirSim NED origin in Unreal world coordinates), the fire-kit
