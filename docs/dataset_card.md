@@ -14,13 +14,15 @@ size_categories: [10K<n<100K]
 Synthetic low-altitude UAV sequences over a forest with active fires — RGB, depth, normals, materials and exact poses —
 for SLAM, 3D Gaussian Splatting and robust perception under smoke, flames, falling leaves, fog and changing illumination.
 
-v2.0 is a re-collection of the WildfireX-SLAM benchmark structure (v1.0, MMM 2026 paper) with the open `wildfirex`
+v2.0 follows the benchmark structure of v1.0 (MMM 2026 paper; differences below) and was collected with the open `wildfirex`
 toolkit on simulator WildfireX-Sim 1.1: six fire sites,
 canopy-following flights just above the trees, float depth, exact camera poses, 30 Hz with 0.1 m per frame,
 runtime-controlled conditions and automatic quality checks. Every sequence can be regenerated with
 `wildfirex collect wildfirex_slam_v2.yaml --only <id>` (toolkit: `pip install wildfirex`; code, config and docs in the
 [WildfireX-SLAM repository](https://github.com/zhicongsun/WildfireX-SLAM); project page:
 [zhicongsun.github.io/wildfirexslam](https://zhicongsun.github.io/wildfirexslam)).
+
+![One frame of each of the 19 sequences, and a 3D map fused from depth and ground-truth poses](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM/resolve/main/assets/sequences_grid.jpg)
 
 | | |
 |---|---|
@@ -31,7 +33,7 @@ runtime-controlled conditions and automatic quality checks. Every sequence can b
 | Flight altitude | follows the surveyed canopy with a minimum clearance of 12 m (spirals of A) or 15 m (all others); per-sequence median 29–42 m above ground, 17–24 m above the canopy |
 | Simulator | WildfireX-Sim 1.1 (Electric Dreams, UE 5.2, AirSim-WildfireX plugin; + movable fire kits, moon) |
 | Collected with | wildfirex 0.1.0 (`wildfirex_slam_v2.yaml`) |
-| Size | ≈ 58 GB (PNG) |
+| Size | ≈ 62 GB (PNG in one zip per modality per sequence; RGB + depth ≈ 17.5 GB) |
 
 ## Benchmarks (`splits/wildfirex_slam_v2_0.json`)
 
@@ -43,12 +45,18 @@ runtime-controlled conditions and automatic quality checks. Every sequence can b
 | CS3 | ed05-0001, 0002 | fog 0 vs 0.7 | T02 side survey |
 | CS4 | ed06-0001 | fire + leaves + fog 0.35 + night | T04 spiral |
 
+![Six fire sites and the 19 trajectories, coloured by benchmark](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM/resolve/main/assets/trajectories.jpg)
+
 Paired sequences share exactly the same trajectory and fire. Per-sequence conditions are in `sequences.csv`
 and each `meta.json`.
 
 Fire: three fire kits (ground flames + smoke) form a ≈ 24 m fire front at every site; at `ed01` the level's original
-fire and smoke column (as in v1.0) are kept as well. At dusk a low sun lights the canopy from the opposite side to morning and the fire
+fire and smoke column are kept as well. At dusk a low sun lights the canopy from the opposite side to morning and the fire
 glows faintly; at night a weak moon and the fire light the scene, so it is dark away from the fire.
+
+### Conditions
+
+![Same trajectory, one factor changed: fire, fog, falling leaves, time of day](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM/resolve/main/assets/conditions.jpg)
 
 ## Download
 
@@ -100,7 +108,7 @@ positions and all versions, so sequences from different sites can be put in one 
 
 ### Sequence ids
 
-`<site>-<number>`, e.g. `ed04-0003`: `ed` = the Electric Dreams map, `01`–`06` = fire site (`ed01` is the paper's
+`<site>-<number>`, e.g. `ed04-0003`: `ed` = the Electric Dreams map, `01`–`06` = fire site (`ed01` is the level's original
 fire, `ed02`–`ed06` were chosen in the forest from the canopy survey), `0001`… = running number at that site. Conditions
 (fire, light, fog, leaves, trajectory) are fields in `sequences.csv` and `meta.json`, never part of the id, so new
 conditions never rename data.
@@ -117,15 +125,23 @@ conditions never rename data.
 | `specular` | material specular (G-buffer), grey |
 | `ir` | AirSim object-ID "infrared" image (grey value per object), **not** a physical thermal image |
 
-## Differences from v1.0 (paper) — please read
+![The seven modalities of one frame and the camera trajectory of the sequence](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM/resolve/main/assets/modalities.jpg)
 
-- Coverage: six fire sites within ≈ 600 m of the central forest, each flown over ≈ 100–150 m — not the 16 km² of v1.0.
-- Altitude: canopy-following, at least 12–15 m above the canopy, 26–53 m above ground, median ≤ 42 m (v1.0: "< 50 m above ground", fixed height).
-- Views: the camera looks at the fire from 42–110 m (spiral, side survey, search); flying right over a fire puts the camera
-  inside the smoke column (> 50 % of the image), so v2.0 has no nadir pass over the flames.
-- No physical thermal images (`ir` is AirSim's object-ID image); no near-ground views.
-- Depth includes smoke, flames and falling leaves (same instant as RGB); foliage moves with wind.
-- Fire sites `ed02`–`ed06` use fire kits added to the level (WildfireX-Sim 1.1); `ed01` is the paper's fire.
+## Differences from v1.0 (MMM 2026 paper) — please read
+
+- **Scale and views**: v1.0 has 5.5k RGB-D images over a 16 km² forest map, with aerial and near-ground views. v2.0 has
+  16,572 frames at six fire sites within ≈ 600 m of the central forest, aerial views only.
+- **Altitude**: v1.0 flies below 50 m above ground, Benchmark A within 15 m above ground. v2.0 follows the canopy at least
+  12–15 m above the trees: 26–53 m above ground, per-sequence median 29–42 m.
+- **Benchmarks**: A has 8 sequences at two sites (v1.0: 2). CS1 varies falling leaves with the fire on, at one site
+  (v1.0: with / without fire in two environments, with / without leaves). CS2 adds dusk to morning, noon and night.
+  CS3 (fog) and CS4 (fire + leaves + fog + night) follow v1.0.
+- **Modalities**: v1.0 includes thermal images. v2.0 has RGB, depth, normal, albedo, roughness, specular and an
+  object-ID image (`ir`, not thermal); it has no thermal images.
+- **Fire**: `ed02`–`ed06` use fire kits added to the level (WildfireX-Sim 1.1); `ed01` uses the level's original fire.
+- **Views of the fire**: the camera looks at the fire from 42–110 m (spiral, side survey, search); a pass right over a
+  fire puts the camera inside the smoke column (> 50 % of the image), so v2.0 has no nadir pass over the flames.
+- **Depth content**: depth includes smoke, flames and falling leaves (same instant as RGB); foliage moves with wind.
 
 ## Quality
 

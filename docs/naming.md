@@ -7,8 +7,8 @@ dataset names.
 |---|---|---|---|
 | Project (paper, dataset configs, toolkit, docs) | `WildfireX-SLAM` | GitHub `zhicongsun/WildfireX-SLAM` | dataset releases `v1.0` (paper), `v2.0`, ... as git tags |
 | Toolkit | Python package / command `wildfirex` | `src/wildfirex` in this repository, PyPI `wildfirex` | SemVer `0.x` → `1.0` |
-| Dataset | WildfireX-SLAM | Hugging Face `zhicongsun/WildfireX-SLAM` (v2.0); v1.0 on request | `v1.0` (paper), `v2.0`, `v3.0` (spreading fire) |
-| Simulator (packaged UE environment) | WildfireX-Sim | Hugging Face `zhicongsun/WildfireX-Sim` (coming soon) | `1.0` = paper; `1.1` = + fire kits, moon (v2.0); `2.0` = spreading fire |
+| Dataset | WildfireX-SLAM | Hugging Face `zhicongsun/WildfireX-SLAM` (v2.0); v1.0 on request | `v1.0` (paper), `v2.0`, `v3.0` (dynamic fire with fire-front ground truth) |
+| Simulator (packaged UE environment) | WildfireX-Sim | Hugging Face `zhicongsun/WildfireX-Sim` (coming soon) | `1.0` = paper; `1.1` = + fire kits, moon (v2.0); `2.0` = dynamic fire with fire-front ground truth |
 
 - Toolkit, simulator and dataset are versioned independently; every `meta.json` records the toolkit, config-schema,
   simulator and dataset versions it was produced with.

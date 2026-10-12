@@ -13,10 +13,10 @@ Dataset
 
 Toolkit (`src/wildfirex`, first public release)
 - Simulator control through a vendored, matched AirSim client; msgpack ≥ 1.0 for ~125× faster float depth.
-- Depth: float DepthPlanar stored as 16-bit cm PNG, captured in the same frame as RGB (v1: 8-bit DepthPerspective).
-- Poses from `simGetCameraInfo`, exported as OpenCV camera-to-world in TUM and Replica formats (v1: body pose + offset).
+- Depth: float DepthPlanar stored as 16-bit cm PNG, captured in the same frame as RGB.
+- Poses from `simGetCameraInfo`, exported as OpenCV camera-to-world in TUM and Replica formats.
 - 30 Hz with 0.1 m per frame (waypoint densification + slerp); world time advanced exactly 1/30 s per frame via
-  `simSetGameSpeed` (v1: `ClockSpeed`, which does not slow the world in ComputerVision mode).
+  `simSetGameSpeed`.
 - 5 pre-roll captures before frame 0 (the first capture after warm-up held stale render-target content).
 - Runtime scene control: fire on/off, movable fire kits at any site, sun presets (dusk from the opposite azimuth to
   morning), moon, fire light dimmed by preset, fog, falling leaves.

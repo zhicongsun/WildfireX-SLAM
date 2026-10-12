@@ -5,9 +5,9 @@ this repository.
 
 | Version | Content | Download | Used by |
 |---|---|---|---|
-| 1.0 | Electric Dreams environment, M5 VFX Niagara smoke column (static), AirSim-WildfireX plugin; packaged 2025-08-27 | `WildfireX-Sim-1.0-Win64.zip` (≈13 GB) — coming soon | WildfireX-SLAM v1.0 |
+| 1.0 | Electric Dreams environment, M5 VFX Niagara fire, AirSim-WildfireX plugin (environment of the MMM 2026 paper) | `WildfireX-Sim-1.0-Win64.zip` (≈13 GB) — coming soon | WildfireX-SLAM v1.0 |
 | 1.1 | 1.0 + movable fire kits (flame variants, smoke, fire light), moon, night auto-exposure range; same code | `WildfireX-Sim-1.1-Win64.zip` (≈13 GB) — coming soon | WildfireX-SLAM v2.0 |
-| 2.0 | planned: fire spread, fire/smoke masks | – | – |
+| 2.0 | planned: dynamic fire scenes with per-frame fire-front ground truth, fire/smoke masks | – | – |
 
 ### 1.1 changes (add-only)
 

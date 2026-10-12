@@ -25,9 +25,9 @@
 </h3>
 
 <p align="center">
-  <img src="./images/v2_overview.jpg" alt="WildfireX-SLAM v2.0: six fire sites and 19 trajectories" width="100%">
+  <img src="./images/v2_sequences.jpg" alt="WildfireX-SLAM v2.0: one frame of each of the 19 sequences" width="100%">
 </p>
-<p align="center">WildfireX-SLAM v2.0: six fire sites in a UE5 forest, 19 canopy-following UAV trajectories. <a href="https://zhicongsun.github.io/wildfirexslam">Video on the project page.</a></p>
+<p align="center">WildfireX-SLAM v2.0: one frame of each of the 19 sequences, and a 3D map fused from depth and ground-truth poses. <a href="https://zhicongsun.github.io/wildfirexslam">Video on the project page.</a></p>
 
 ## News
 
@@ -57,7 +57,8 @@
 | CS3 | ed05-0001, 0002 | fog (0 vs 0.7) | lawn-mower survey |
 | CS4 | ed06-0001 | fire + leaves + fog (0.35) + night | spiral |
 
-<p align="center"><img src="./images/v2_sequences.jpg" alt="one frame of each sequence" width="100%"></p>
+<p align="center"><img src="./images/v2_overview.jpg" alt="six fire sites and 19 trajectories" width="100%"></p>
+<p align="center">Six fire sites in the UE5 forest and the 19 canopy-following trajectories, coloured by benchmark.</p>
 
 Download from [Hugging Face](https://huggingface.co/datasets/zhicongsun/WildfireX-SLAM) — one zip per modality per sequence,
 so you can fetch e.g. only RGB-D (≈ 17.5 GB of ≈ 62 GB); see the dataset card — unzip in place and load a sequence:
